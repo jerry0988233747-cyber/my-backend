@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // 連接 MongoDB
-mongoose.connect("mongodb://localhost:27017/mytodos")
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/mytodos")
   .then(() => console.log("MongoDB 連接成功！"))
   .catch((err) => console.log("連接失敗：", err));
 
@@ -41,6 +41,7 @@ app.delete("/tasks/:id", async (req, res) => {
   res.json({ message: "刪除成功" });
 });
 
-app.listen(3000, () => {
-  console.log("伺服器啟動，port 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("伺服器啟動，port " + PORT);
 });
