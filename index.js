@@ -35,6 +35,12 @@ app.post("/tasks", async (req, res) => {
   res.json(task);
 });
 
+// 更新待辦事項狀態
+app.patch("/tasks/:id", async (req, res) => {
+  await Task.findByIdAndUpdate(req.params.id, { done: req.body.done });
+  res.json({ message: "更新成功" });
+});
+
 // 刪除待辦事項
 app.delete("/tasks/:id", async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
